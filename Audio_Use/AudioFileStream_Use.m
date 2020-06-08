@@ -6,10 +6,10 @@
 //  Copyright © 2020 fqs. All rights reserved.
 //
 
-#import "QSTool.h"
+#import "AudioFileStream_Use.h"
 #import <AVKit/AVKit.h>
 
-@implementation QSTool
+@implementation AudioFileStream_Use
 
 //http://music.163.com/song/media/outer/url?id=299449.mp3
 //http://music.163.com/song/media/outer/url?id=1378603811.mp3
@@ -114,7 +114,7 @@ void audioFileStream_PropertyCallBack(void *inClientData, AudioFileStreamID inAu
          UInt64 audioDataByteCount = fileLength - dataOffset;
          */
     } else if (inPropertyID == kAudioFileStreamProperty_ReadyToProducePackets) {
-        // 代表音频解析完成，接下来可以对音频数据进行帧分离了
+        // 代表音频格式信息解析完成，接下来可以对音频数据进行帧分离了
         NSLog(@"获取音频信息完成: 可以进行音频数据帧分离了");
     }
     
@@ -188,13 +188,49 @@ void audioFileStream_PacketsCallBack(void *inClientData, UInt32 inNumberBytes, U
     SInt64 dataOffset = 0; // 通过kAudioFileStreamProperty_DataOffset获取的值
     UInt32 bitRate = 0; // 通过kAudioFileStreamProperty_BitRate获取的值
     double duration = audioDataByteCount * 8 / bitRate; // 计算音频时长
-    SInt64 seekOffset = dataOffset + (seekToTime / duration) * audioDataByteCount;
-    NSLog(@"%lld", seekOffset);
+    SInt64 approximateSeekOffset = dataOffset + (seekToTime / duration) * audioDataByteCount;
+    NSLog(@"%lld", approximateSeekOffset);
     
     // 计算seek到第几个packet
     AudioStreamBasicDescription asbd; // 通过kAudioFileStreamProperty_DataFormat或者kAudioFormatProperty_FormatList获取的值
     double packetDuration = asbd.mFramesPerPacket / asbd.mSampleRate;
-    SInt64 seetToPacket = floor(seekToTime / packetDuration);
+    SInt64 seekToPacket = floor(seekToTime / packetDuration);
+    NSLog(@"%lld", seekToPacket);
+    
+    // 通过AudioFileStreamSeek计算某个Packet的字节偏移和时间
+    AudioFileStreamID inAudioFileStream = NULL;
+    SInt64 inPacketOffset = 20;
+    SInt64 seekByteOffset;
+    SInt64 outDataByteOffset;
+    AudioFileStreamSeekFlags ioFlags;
+    OSStatus status = AudioFileStreamSeek(inAudioFileStream, inPacketOffset, &outDataByteOffset, &ioFlags);
+    if (status == noErr && ioFlags != kAudioFileStreamSeekFlag_OffsetIsEstimated) {
+        // 如果ioFlags是kAudioFileStreamSeekFlag_OffsetIsEstimated则说明给出的outDataByteOffset是估算的，
+        // 并不准确，那么还是应该用第1步计算出来的approximateSeekOffset来做seek
+        // 如果AudioFileStreamSeek找到了准确的字节偏移, 需要修正一下时间
+        seekToTime = seekToTime - (approximateSeekOffset - dataOffset - outDataByteOffset) * 8 / bitRate;
+        seekByteOffset = dataOffset + outDataByteOffset;
+    } else {
+        // 如果ioFlags不是kAudioFileStreamSeekFlag_OffsetIsEstimated则说明给出的outDataByteOffset是准确的，
+        // 就是输入的seekToPacket对应的字节偏移量，我们可以根据outDataByteOffset来计算出精确的seekOffset和seekToTime
+        seekByteOffset = approximateSeekOffset;
+    }
+    
+    // 按照seekByteOffset读取对应的数据继续使用AudioFileStreamParseByte进行解析
+    // 如果是网络流可以通过设置Range头来获取字节, 本地文件可以直接seek
+    // 调用AudioFileStreamParseByte时注意刚seek完第一次Parse数据需要加参数kAudioFileStreamParseFlag_Discontinuity
+}
+
+#pragma mark - 关闭AudioFileStream
+
+- (void)closeAFS {
+    AudioFileStreamID inAudioFileStream = NULL;
+    OSStatus status = AudioFileStreamClose(inAudioFileStream);
+    if (status == noErr) {
+        NSLog(@"关闭AudioFileStream成功");
+    } else {
+        NSLog(@"关闭AudioFileStream失败");
+    }
 }
 
 @end

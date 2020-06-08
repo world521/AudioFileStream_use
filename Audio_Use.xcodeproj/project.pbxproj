@@ -14,10 +14,11 @@
 		4FD1E19D248A4D1C00EB1665 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FD1E19C248A4D1C00EB1665 /* Assets.xcassets */; };
 		4FD1E1A0248A4D1C00EB1665 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FD1E19E248A4D1C00EB1665 /* LaunchScreen.storyboard */; };
 		4FD1E1A3248A4D1C00EB1665 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1E1A2248A4D1C00EB1665 /* main.m */; };
+		4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4FD1E18D248A4D1800EB1665 /* AudioFileStream_use.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioFileStream_use.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FD1E18D248A4D1800EB1665 /* Audio_Use.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Audio_Use.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD1E190248A4D1800EB1665 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FD1E191248A4D1800EB1665 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FD1E193248A4D1800EB1665 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -29,6 +30,8 @@
 		4FD1E19F248A4D1C00EB1665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FD1E1A1248A4D1C00EB1665 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD1E1A2248A4D1C00EB1665 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4FD1E1A9248A4DF900EB1665 /* AudioFileStream_Use.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFileStream_Use.h; sourceTree = "<group>"; };
+		4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFileStream_Use.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +48,7 @@
 		4FD1E184248A4D1800EB1665 = {
 			isa = PBXGroup;
 			children = (
-				4FD1E18F248A4D1800EB1665 /* AudioFileStream_use */,
+				4FD1E18F248A4D1800EB1665 /* Audio_Use */,
 				4FD1E18E248A4D1800EB1665 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,12 +56,12 @@
 		4FD1E18E248A4D1800EB1665 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4FD1E18D248A4D1800EB1665 /* AudioFileStream_use.app */,
+				4FD1E18D248A4D1800EB1665 /* Audio_Use.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4FD1E18F248A4D1800EB1665 /* AudioFileStream_use */ = {
+		4FD1E18F248A4D1800EB1665 /* Audio_Use */ = {
 			isa = PBXGroup;
 			children = (
 				4FD1E190248A4D1800EB1665 /* AppDelegate.h */,
@@ -67,21 +70,23 @@
 				4FD1E194248A4D1800EB1665 /* SceneDelegate.m */,
 				4FD1E196248A4D1800EB1665 /* ViewController.h */,
 				4FD1E197248A4D1800EB1665 /* ViewController.m */,
+				4FD1E1A9248A4DF900EB1665 /* AudioFileStream_Use.h */,
+				4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */,
 				4FD1E199248A4D1800EB1665 /* Main.storyboard */,
 				4FD1E19C248A4D1C00EB1665 /* Assets.xcassets */,
 				4FD1E19E248A4D1C00EB1665 /* LaunchScreen.storyboard */,
 				4FD1E1A1248A4D1C00EB1665 /* Info.plist */,
 				4FD1E1A2248A4D1C00EB1665 /* main.m */,
 			);
-			path = AudioFileStream_use;
+			path = Audio_Use;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4FD1E18C248A4D1800EB1665 /* AudioFileStream_use */ = {
+		4FD1E18C248A4D1800EB1665 /* Audio_Use */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4FD1E1A6248A4D1C00EB1665 /* Build configuration list for PBXNativeTarget "AudioFileStream_use" */;
+			buildConfigurationList = 4FD1E1A6248A4D1C00EB1665 /* Build configuration list for PBXNativeTarget "Audio_Use" */;
 			buildPhases = (
 				4FD1E189248A4D1800EB1665 /* Sources */,
 				4FD1E18A248A4D1800EB1665 /* Frameworks */,
@@ -91,9 +96,9 @@
 			);
 			dependencies = (
 			);
-			name = AudioFileStream_use;
+			name = Audio_Use;
 			productName = AudioFileStream_use;
-			productReference = 4FD1E18D248A4D1800EB1665 /* AudioFileStream_use.app */;
+			productReference = 4FD1E18D248A4D1800EB1665 /* Audio_Use.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +115,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4FD1E188248A4D1800EB1665 /* Build configuration list for PBXProject "AudioFileStream_use" */;
+			buildConfigurationList = 4FD1E188248A4D1800EB1665 /* Build configuration list for PBXProject "Audio_Use" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -123,7 +128,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4FD1E18C248A4D1800EB1665 /* AudioFileStream_use */,
+				4FD1E18C248A4D1800EB1665 /* Audio_Use */,
 			);
 		};
 /* End PBXProject section */
@@ -147,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD1E198248A4D1800EB1665 /* ViewController.m in Sources */,
+				4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */,
 				4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */,
 				4FD1E1A3248A4D1C00EB1665 /* main.m in Sources */,
 				4FD1E195248A4D1800EB1665 /* SceneDelegate.m in Sources */,
@@ -290,7 +296,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AudioFileStream_use/Info.plist;
+				INFOPLIST_FILE = Audio_Use/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,7 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = AudioFileStream_use/Info.plist;
+				INFOPLIST_FILE = Audio_Use/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -320,7 +326,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4FD1E188248A4D1800EB1665 /* Build configuration list for PBXProject "AudioFileStream_use" */ = {
+		4FD1E188248A4D1800EB1665 /* Build configuration list for PBXProject "Audio_Use" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FD1E1A4248A4D1C00EB1665 /* Debug */,
@@ -329,7 +335,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FD1E1A6248A4D1C00EB1665 /* Build configuration list for PBXNativeTarget "AudioFileStream_use" */ = {
+		4FD1E1A6248A4D1C00EB1665 /* Build configuration list for PBXNativeTarget "Audio_Use" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FD1E1A7248A4D1C00EB1665 /* Debug */,

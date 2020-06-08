@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:AudioFileStream_use.xcodeproj">
+      location = "self:/Users/fqs/Desktop/AudioFileStream_use/Audio_Use.xcodeproj">
    </FileRef>
 </Workspace>

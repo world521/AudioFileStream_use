@@ -1,5 +1,5 @@
 //
-//  QSTool.h
+//  AudioFileStream_Use.h
 //  Demo
 //
 //  Created by fengqingsong on 2020/6/2.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QSTool : NSObject
+@interface AudioFileStream_Use : NSObject
 + (void)create;
 @end
 

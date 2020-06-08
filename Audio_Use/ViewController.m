@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AudioFileStream_Use.h"
 
 @interface ViewController ()
 
@@ -19,5 +20,8 @@
     // Do any additional setup after loading the view.
 }
 
+- (IBAction)fire:(UIButton *)sender {
+    [AudioFileStream_Use create];
+}
 
 @end
