@@ -7,7 +7,7 @@
 //
 
 #import "AudioFileStream_Use.h"
-#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation AudioFileStream_Use
 

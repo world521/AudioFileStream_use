@@ -21,7 +21,7 @@
 }
 
 - (IBAction)fire:(UIButton *)sender {
-    [AudioFileStream_Use create];
+    
 }
 
 @end

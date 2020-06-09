@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AudioFileStream_Use : NSObject
-+ (void)create;
+
 @end
 
 NS_ASSUME_NONNULL_END
