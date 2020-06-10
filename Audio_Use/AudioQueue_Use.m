@@ -12,6 +12,12 @@
 @implementation AudioQueue_Use
 
 /*
+ https://github.com/mattgallagher/AudioStreamer
+ https://github.com/muhku/FreeStreamer
+ https://github.com/msching/MCSimpleAudioPlayer
+ */
+
+/*
  根据Apple提供的AudioQueue工作原理结合自己理解，可以得到其工作流程大致如下：
  1. 创建AudioQueue，创建一个自己的buffer数组BufferArray;
  2. 使用AudioQueueAllocateBuffer创建若干个AudioQueueBufferRef（一般2-3个即可），放入BufferArray；
@@ -142,7 +148,55 @@ void AudioQueueOutputCallback_Func(void * __nullable inUserData, AudioQueueRef i
     status = AudioQueueReset(inAQ);
     
     // 获取播放时间
+    // 参数2: 传入NULL
+    AudioTimeStamp outTimeStamp;
+    Boolean outTimelineDiscontinuity;
+    status = AudioQueueGetCurrentTime(inAQ, NULL, &outTimeStamp, &outTimelineDiscontinuity);
+    AudioStreamBasicDescription asbd; // 之前的获取到的音频格式信息
+    NSTimeInterval currentTime = outTimeStamp.mSampleTime / asbd.mSampleRate;
+    NSLog(@"当前时间: %f", currentTime);
+    /*
+      1、 第一个需要注意的时这个播放时间是指实际播放的时间和一般理解上的播放进度是有区别的。
+      举个例子，开始播放8秒后用户操作slider把播放进度seek到了第20秒之后又播放了3秒钟，此时通常意义上播放时间应该是23秒，即播放进度；
+      而用GetCurrentTime方法中获得的时间为11秒，即实际播放时间。
+     
+      所以每次seek时都必须保存seek的timingOffset;
+      NSTimeInterval seekTime = 0;
+      NSTimeInterval currentTime = 0;
+      NSTimeInterval timingOffset = seekTime - currentTime;
+     
+      seek后获取当前播放时间需要加上timingOffset;
+      NSTimeInterval currTime = timingOffset + currentTime;
+     
+      2、 第二个需要注意的是GetCurrentTime方法有时候会失败，所以上次获取的播放时间最好保存起来，如果遇到调用失败，就返回上次保存的结果。
+     */
     
+    // 销毁AudioQueue
+    status = AudioQueueDispose(inAQ, true);
+    /*
+     这个方法使用时需要注意当AudioQueueStart调用之后AudioQueue其实还没有真正开始，期间会有一个短暂的间隙。
+     如果在AudioQueueStart调用后到AudioQueue真正开始运作前的这段时间内调用AudioQueueDispose方法的话会导致程序卡死。
+     
+     如AudioStreamer库会在音频EOF时就进入Cleanup环节，Cleanup环节会flush所有数据然后调用Dispose，
+     那么当音频文件中数据非常少时就有可能出现AudioQueueStart调用之时就已经EOF进入Cleanup，此时就会出现上述问题。
+     
+     要规避这个问题第一种方法是做好线程的调度，保证Dispose方法调用一定是在每一个播放RunLoop之后（即至少是一个buffer被成功播放之后）。
+     第二种方法是监听kAudioQueueProperty_IsRunning属性，这个属性在AudioQueue真正运作起来之后会变成1，停止后会变成0，
+     所以需要保证Start方法调用后Dispose方法一定要在IsRunning为1时才能被调用。
+     */
 }
+
+#pragma mark - AudioQueue的几个有用的属性和参数
+
+/*
+ 其中比较有价值的属性有：
+ kAudioQueueProperty_IsRunning监听它可以知道当前AudioQueue是否在运行，这个参数的作用在讲到AudioQueueDispose时已经提到过。
+ kAudioQueueProperty_MagicCookie部分音频格式需要设置magicCookie，这个cookie可以从AudioFileStream和AudioFile中获取。
+ 
+ 比较有价值的参数有：
+ kAudioQueueParam_Volume，它可以用来调节AudioQueue的播放音量，注意这个音量是AudioQueue的内部播放音量和系统音量相互独立设置并且最后叠加生效。
+ kAudioQueueParam_VolumeRampTime参数和Volume参数配合使用可以实现音频播放淡入淡出的效果；
+ kAudioQueueParam_PlayRate参数可以调整播放速率；
+ */
 
 @end
