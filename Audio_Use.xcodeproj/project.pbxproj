@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */; };
+		4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */; };
+		4F6B3F522492009A00E9B834 /* babamama.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F6B3F512492009A00E9B834 /* babamama.mp3 */; };
 		4FCFE771248F2FDF00331A03 /* AudioFile_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */; };
 		4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCFE773248F83A700331A03 /* AudioQueue_Use.m */; };
 		4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1E191248A4D1800EB1665 /* AppDelegate.m */; };
@@ -20,6 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio_Play.h; sourceTree = "<group>"; };
+		4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio_Play.m; sourceTree = "<group>"; };
+		4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioFileStream.h; sourceTree = "<group>"; };
+		4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioFileStream.m; sourceTree = "<group>"; };
+		4F6B3F512492009A00E9B834 /* babamama.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = babamama.mp3; sourceTree = "<group>"; };
 		4FCFE76F248F2FDF00331A03 /* AudioFile_Use.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioFile_Use.h; sourceTree = "<group>"; };
 		4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioFile_Use.m; sourceTree = "<group>"; };
 		4FCFE772248F83A700331A03 /* AudioQueue_Use.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioQueue_Use.h; sourceTree = "<group>"; };
@@ -51,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F6B3F4D2491D06100E9B834 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */,
+				4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		4FD1E184248A4D1800EB1665 = {
 			isa = PBXGroup;
 			children = (
@@ -76,12 +93,16 @@
 				4FD1E194248A4D1800EB1665 /* SceneDelegate.m */,
 				4FD1E196248A4D1800EB1665 /* ViewController.h */,
 				4FD1E197248A4D1800EB1665 /* ViewController.m */,
+				4F6B3F4D2491D06100E9B834 /* Tools */,
 				4FD1E1A9248A4DF900EB1665 /* AudioFileStream_Use.h */,
 				4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */,
 				4FCFE76F248F2FDF00331A03 /* AudioFile_Use.h */,
 				4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */,
 				4FCFE772248F83A700331A03 /* AudioQueue_Use.h */,
 				4FCFE773248F83A700331A03 /* AudioQueue_Use.m */,
+				4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */,
+				4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */,
+				4F6B3F512492009A00E9B834 /* babamama.mp3 */,
 				4FD1E199248A4D1800EB1665 /* Main.storyboard */,
 				4FD1E19C248A4D1C00EB1665 /* Assets.xcassets */,
 				4FD1E19E248A4D1C00EB1665 /* LaunchScreen.storyboard */,
@@ -148,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F6B3F522492009A00E9B834 /* babamama.mp3 in Resources */,
 				4FD1E1A0248A4D1C00EB1665 /* LaunchScreen.storyboard in Resources */,
 				4FD1E19D248A4D1C00EB1665 /* Assets.xcassets in Resources */,
 				4FD1E19B248A4D1800EB1665 /* Main.storyboard in Resources */,
@@ -163,10 +185,12 @@
 			files = (
 				4FCFE771248F2FDF00331A03 /* AudioFile_Use.m in Sources */,
 				4FD1E198248A4D1800EB1665 /* ViewController.m in Sources */,
+				4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */,
 				4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */,
 				4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */,
 				4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */,
 				4FD1E1A3248A4D1C00EB1665 /* main.m in Sources */,
+				4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */,
 				4FD1E195248A4D1800EB1665 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

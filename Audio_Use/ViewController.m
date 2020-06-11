@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
-#import "AudioFileStream_Use.h"
+#import "QSAudioFileStream.h"
 
-@interface ViewController ()
+@interface ViewController () <QSAudioFileStreamDelegate> {
+    QSAudioFileStream *_audioFileStream;
+}
 
 @end
 
@@ -17,10 +19,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (IBAction)fire:(UIButton *)sender {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"babamama" ofType:@"mp3"];
+    unsigned long long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:path error:NULL] fileSize];
+    NSError *error;
+    _audioFileStream = [[QSAudioFileStream alloc] initWithFileType:kAudioFileMP3Type fileSize:fileSize error:&error];
+    _audioFileStream.delegate = self;
+    if (error) return;
+    
+    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:path];
+    if (!file) return;
+    
+    UInt32 lengthPerRead = 10000;
+    while (fileSize) {
+        NSData *data = [file readDataOfLength:lengthPerRead];
+        fileSize -= data.length;
+        [_audioFileStream parseData:data error:&error];
+        if (error) {
+            if (error.code == kAudioFileStreamError_NotOptimized) {
+                NSLog(@"audio not optimized");
+            }
+            break;
+        }
+    }
+    
     
 }
 
