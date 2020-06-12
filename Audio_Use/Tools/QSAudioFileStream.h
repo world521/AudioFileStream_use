@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 @class QSAudioFileStream;
+@class QSAudioFileStreamParsedData;
 
 @protocol QSAudioFileStreamDelegate <NSObject>
 @required
-- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray *)audioData;
+- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray <QSAudioFileStreamParsedData *> *)audioData;
 @optional
 - (void)audioFileStreamReadyToProducePackets:(QSAudioFileStream *)audioFileStream;
 @end
@@ -34,6 +35,7 @@
 
 - (instancetype)initWithFileType:(AudioFileTypeID)fileType fileSize:(UInt64)fileSize error:(NSError *__autoreleasing *)error;
 - (BOOL)parseData:(NSData *)data error:(NSError *__autoreleasing *)error;
+- (void)close;
 
 @end
 

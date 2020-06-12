@@ -8,13 +8,20 @@
 
 #import "QSAudioFileStream.h"
 
+#define MaxPacketsThatUpdateBitRate 5000
+#define MinPacketsThatUpdateBitRate 10
+
+
 @interface QSAudioFileStream() {
     BOOL _discontinuous;
     
     AudioFileStreamID _audioFileStreamID;
     
+    UInt64 _processedPacketsSize;
+    UInt64 _processedPacketsCount;
+    
     NSTimeInterval _packetDuration;
-    UInt32 _dataOffset;
+    SInt64 _dataOffset;
 }
 - (void)handleAudioFileStreamProperty:(AudioFilePropertyID)propertyID;
 - (void)handleAudioFileStreamPackets:(const void *)packets numberOfBytes:(UInt32)numberOfBytes numberOfPackets:(UInt32)numberOfPackets packetDescriptions:(AudioStreamPacketDescription *)packetDescriptions;
@@ -52,6 +59,10 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
     [audioFileStream handleAudioFileStreamPackets:inInputData numberOfBytes:inNumberBytes numberOfPackets:inNumberPackets packetDescriptions:inPacketDescriptions];
 }
 
+- (void)dealloc {
+    [self _closeAudioFileStream];
+}
+
 - (instancetype)initWithFileType:(AudioFileTypeID)fileType fileSize:(UInt64)fileSize error:(NSError *__autoreleasing *)error {
     if (self = [super init]) {
         _discontinuous = NO;
@@ -81,6 +92,10 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
     OSStatus status = AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)data.length, data.bytes, parseFlags);
     [self _errorForOSStatus:status error:error];
     return status == noErr;
+}
+
+- (void)close {
+    [self _closeAudioFileStream];
 }
 
 /**
@@ -192,7 +207,18 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
         SInt64 packetOffset = packetDescriptions[i].mStartOffset;
         QSAudioFileStreamParsedData *parsedData = [QSAudioFileStreamParsedData parseDataWithBytes:packets + packetOffset packectDescription:packetDescriptions[i]];
         [parsedDataArray addObject:parsedData];
+        
+        _processedPacketsSize += parsedData.packetDescription.mDataByteSize;
+        _processedPacketsCount += 1;
+        
+        if (_processedPacketsCount > MinPacketsThatUpdateBitRate && _processedPacketsCount < MaxPacketsThatUpdateBitRate) {
+            // 刚开始时近似计算并更新码率
+            [self _calculateBitRate];
+            [self _calculateDuration];
+        }
     }
+    
+    [_delegate audioFileStream:self audioDataParsed:parsedDataArray];
     
     if (deletePacketDesc) {
         free(packetDescriptions);
@@ -201,7 +227,15 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
 
 - (void)_calculateDuration {
     if (_fileSize > 0 && _bitRate > 0) {
-        _duration = (_fileSize - _dataOffset) * 8 / _bitRate;
+        NSLog(@"fileSize:%lld dataOffset:%lld", _fileSize, _dataOffset);
+        _duration = (_fileSize - _dataOffset) * 8.0 / _bitRate;
+    }
+}
+
+- (void)_calculateBitRate {
+    if (_packetDuration) {
+        double packetSize = _processedPacketsSize / _processedPacketsCount;
+        _bitRate = packetSize * 8.0 / _packetDuration;
     }
 }
 
@@ -214,6 +248,13 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
 - (void)_errorForOSStatus:(OSStatus)status error:(NSError *__autoreleasing *)outError {
     if (status != noErr && outError != NULL) {
         *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:status userInfo:nil];
+    }
+}
+
+- (void)_closeAudioFileStream {
+    if (!_audioFileStreamID) {
+        AudioFileStreamClose(_audioFileStreamID);
+        _audioFileStreamID = NULL;
     }
 }
 
