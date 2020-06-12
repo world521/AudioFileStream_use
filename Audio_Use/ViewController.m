@@ -8,9 +8,14 @@
 
 #import "ViewController.h"
 #import "QSAudioFileStream.h"
+#import "QSAudioFile.h"
 
-@interface ViewController () <QSAudioFileStreamDelegate> {
-    QSAudioFileStream *_audioFileStream;
+@interface ViewController () <QSAudioFileStreamDelegate>
+{
+//    NSFileHandle *_file;
+//    QSAudioFileStream *_audioFileStream;
+    
+    QSAudioFile *_audioFile;
 }
 
 @end
@@ -22,6 +27,7 @@
 }
 
 - (IBAction)fire:(UIButton *)sender {
+    /*
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"她来听我的演唱会" ofType:@"mp3"];
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"小城大事" ofType:@"mp3"];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
@@ -32,12 +38,12 @@
     _audioFileStream.delegate = self;
     if (error) return;
     
-    NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:path];
-    if (!file) return;
+    _file = [NSFileHandle fileHandleForReadingAtPath:path];
+    if (!_file) return;
     
     UInt32 lengthPerRead = 10000;
     while (fileSize) {
-        NSData *data = [file readDataOfLength:lengthPerRead];
+        NSData *data = [_file readDataOfLength:lengthPerRead];
         fileSize -= data.length;
         [_audioFileStream parseData:data error:&error];
         if (error) {
@@ -52,7 +58,20 @@
     
     [_audioFileStream close];
     _audioFileStream = nil;
-    [file closeFile];
+    [_file closeFile];
+    _file = nil;
+     */
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
+    _audioFile = [[QSAudioFile alloc] init];
+}
+
+- (IBAction)fire2:(UIButton *)sender {
+    
+}
+
+- (IBAction)fire3:(UIButton *)sender {
+    
 }
 
 - (void)audioFileStreamReadyToProducePackets:(QSAudioFileStream *)audioFileStream {

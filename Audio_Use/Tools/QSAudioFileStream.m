@@ -94,13 +94,63 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
     return status == noErr;
 }
 
+- (SInt64)seekToTime:(NSTimeInterval *)ioSeekTime {
+    SInt64 seekByteOffset = 0;
+    SInt64 approximateSeekOffset = 0;
+    
+    if (_duration) {
+        approximateSeekOffset = _dataOffset + (*ioSeekTime / _duration) * _audioDataByteCount;
+        NSLog(@"大概的seek offset: %lld", approximateSeekOffset);
+    }
+    
+    if (_packetDuration) {
+        SInt64 seekToPacket = *ioSeekTime / _packetDuration;
+        SInt64 outDataByteOffset;
+        AudioFileStreamSeekFlags ioFlags = 0;
+        OSStatus status = AudioFileStreamSeek(_audioFileStreamID, seekToPacket, &outDataByteOffset, &ioFlags);
+        if (status == noErr && !(ioFlags & kAudioFileStreamSeekFlag_OffsetIsEstimated)) {
+            // 给出的是精确的 seek bytes
+            if (_bitRate) {
+                *ioSeekTime -= (approximateSeekOffset - _dataOffset - outDataByteOffset) * 8.0 / _bitRate;
+                seekByteOffset = outDataByteOffset;
+            }
+        } else {
+            seekByteOffset = approximateSeekOffset;
+        }
+    }
+    
+    _discontinuous = YES;
+    
+    return seekByteOffset;
+}
+
+- (NSData *)fetchMagicCookie {
+    UInt32 cookie_length;
+    Boolean outWritable;
+    OSStatus status = AudioFileStreamGetPropertyInfo(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookie_length, &outWritable);
+    if (status != noErr) {
+        NSLog(@"获取kAudioFileStreamProperty_MagicCookieData失败");
+        return nil;
+    }
+    
+    void *cookieData = malloc(cookie_length);
+    status = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookie_length, cookieData);
+    if (status != noErr) {
+        NSLog(@"获取kAudioFileStreamProperty_MagicCookieData失败");
+        free(cookieData);
+        return nil;
+    }
+    
+    NSData *cookie = [NSData dataWithBytes:cookieData length:cookie_length];
+    free(cookieData);
+    
+    return cookie;
+}
+
 - (void)close {
     [self _closeAudioFileStream];
 }
 
-/**
- 处理音频格式回调
- */
 - (void)handleAudioFileStreamProperty:(AudioFilePropertyID)propertyID {
     if (propertyID == kAudioFileStreamProperty_ReadyToProducePackets) {
         _readyToProducePackets = YES;
@@ -227,7 +277,6 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
 
 - (void)_calculateDuration {
     if (_fileSize > 0 && _bitRate > 0) {
-        NSLog(@"fileSize:%lld dataOffset:%lld", _fileSize, _dataOffset);
         _duration = (_fileSize - _dataOffset) * 8.0 / _bitRate;
     }
 }

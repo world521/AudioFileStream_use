@@ -12,6 +12,8 @@
 		4F90A0492493217200054CE5 /* 小城大事.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F90A0472493217200054CE5 /* 小城大事.mp3 */; };
 		4F90A04A2493217200054CE5 /* 她来听我的演唱会.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F90A0482493217200054CE5 /* 她来听我的演唱会.mp3 */; };
 		4F90A050249321C000054CE5 /* MP3Sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F90A04F249321C000054CE5 /* MP3Sample.mp3 */; };
+		4F90A05824935C4600054CE5 /* Audio_UseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F90A05724935C4600054CE5 /* Audio_UseTests.m */; };
+		4F90A06124936C9B00054CE5 /* QSAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F90A06024936C9B00054CE5 /* QSAudioFile.m */; };
 		4FCFE771248F2FDF00331A03 /* AudioFile_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */; };
 		4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCFE773248F83A700331A03 /* AudioQueue_Use.m */; };
 		4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1E191248A4D1800EB1665 /* AppDelegate.m */; };
@@ -24,6 +26,16 @@
 		4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4F90A05A24935C4600054CE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD1E185248A4D1800EB1665 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FD1E18C248A4D1800EB1665;
+			remoteInfo = Audio_Use;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio_Play.h; sourceTree = "<group>"; };
 		4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio_Play.m; sourceTree = "<group>"; };
@@ -32,6 +44,11 @@
 		4F90A0472493217200054CE5 /* 小城大事.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "小城大事.mp3"; sourceTree = "<group>"; };
 		4F90A0482493217200054CE5 /* 她来听我的演唱会.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "她来听我的演唱会.mp3"; sourceTree = "<group>"; };
 		4F90A04F249321C000054CE5 /* MP3Sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MP3Sample.mp3; sourceTree = "<group>"; };
+		4F90A05524935C4600054CE5 /* Audio_UseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Audio_UseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F90A05724935C4600054CE5 /* Audio_UseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio_UseTests.m; sourceTree = "<group>"; };
+		4F90A05924935C4600054CE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F90A05F24936C9B00054CE5 /* QSAudioFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioFile.h; sourceTree = "<group>"; };
+		4F90A06024936C9B00054CE5 /* QSAudioFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioFile.m; sourceTree = "<group>"; };
 		4FCFE76F248F2FDF00331A03 /* AudioFile_Use.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioFile_Use.h; sourceTree = "<group>"; };
 		4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioFile_Use.m; sourceTree = "<group>"; };
 		4FCFE772248F83A700331A03 /* AudioQueue_Use.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioQueue_Use.h; sourceTree = "<group>"; };
@@ -53,6 +70,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F90A05224935C4600054CE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FD1E18A248A4D1800EB1665 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,16 +90,30 @@
 		4F6B3F4D2491D06100E9B834 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */,
+				4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */,
 				4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */,
 				4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */,
+				4F90A05F24936C9B00054CE5 /* QSAudioFile.h */,
+				4F90A06024936C9B00054CE5 /* QSAudioFile.m */,
 			);
 			path = Tools;
+			sourceTree = "<group>";
+		};
+		4F90A05624935C4600054CE5 /* Audio_UseTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F90A05724935C4600054CE5 /* Audio_UseTests.m */,
+				4F90A05924935C4600054CE5 /* Info.plist */,
+			);
+			path = Audio_UseTests;
 			sourceTree = "<group>";
 		};
 		4FD1E184248A4D1800EB1665 = {
 			isa = PBXGroup;
 			children = (
 				4FD1E18F248A4D1800EB1665 /* Audio_Use */,
+				4F90A05624935C4600054CE5 /* Audio_UseTests */,
 				4FD1E18E248A4D1800EB1665 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				4FD1E18D248A4D1800EB1665 /* Audio_Use.app */,
+				4F90A05524935C4600054CE5 /* Audio_UseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,8 +143,6 @@
 				4FCFE770248F2FDF00331A03 /* AudioFile_Use.m */,
 				4FCFE772248F83A700331A03 /* AudioQueue_Use.h */,
 				4FCFE773248F83A700331A03 /* AudioQueue_Use.m */,
-				4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */,
-				4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */,
 				4F90A0482493217200054CE5 /* 她来听我的演唱会.mp3 */,
 				4F90A0472493217200054CE5 /* 小城大事.mp3 */,
 				4F90A04F249321C000054CE5 /* MP3Sample.mp3 */,
@@ -121,6 +158,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F90A05424935C4600054CE5 /* Audio_UseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F90A05C24935C4600054CE5 /* Build configuration list for PBXNativeTarget "Audio_UseTests" */;
+			buildPhases = (
+				4F90A05124935C4600054CE5 /* Sources */,
+				4F90A05224935C4600054CE5 /* Frameworks */,
+				4F90A05324935C4600054CE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F90A05B24935C4600054CE5 /* PBXTargetDependency */,
+			);
+			name = Audio_UseTests;
+			productName = Audio_UseTests;
+			productReference = 4F90A05524935C4600054CE5 /* Audio_UseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4FD1E18C248A4D1800EB1665 /* Audio_Use */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FD1E1A6248A4D1C00EB1665 /* Build configuration list for PBXNativeTarget "Audio_Use" */;
@@ -147,6 +202,10 @@
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = agant;
 				TargetAttributes = {
+					4F90A05424935C4600054CE5 = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = 4FD1E18C248A4D1800EB1665;
+					};
 					4FD1E18C248A4D1800EB1665 = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -166,11 +225,19 @@
 			projectRoot = "";
 			targets = (
 				4FD1E18C248A4D1800EB1665 /* Audio_Use */,
+				4F90A05424935C4600054CE5 /* Audio_UseTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F90A05324935C4600054CE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FD1E18B248A4D1800EB1665 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -187,12 +254,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F90A05124935C4600054CE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F90A05824935C4600054CE5 /* Audio_UseTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FD1E189248A4D1800EB1665 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4FCFE771248F2FDF00331A03 /* AudioFile_Use.m in Sources */,
 				4FD1E198248A4D1800EB1665 /* ViewController.m in Sources */,
+				4F90A06124936C9B00054CE5 /* QSAudioFile.m in Sources */,
 				4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */,
 				4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */,
 				4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */,
@@ -204,6 +280,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F90A05B24935C4600054CE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FD1E18C248A4D1800EB1665 /* Audio_Use */;
+			targetProxy = 4F90A05A24935C4600054CE5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4FD1E199248A4D1800EB1665 /* Main.storyboard */ = {
@@ -225,6 +309,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F90A05D24935C4600054CE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Audio_UseTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fqs.Audio-UseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audio_Use.app/Audio_Use";
+			};
+			name = Debug;
+		};
+		4F90A05E24935C4600054CE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Audio_UseTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fqs.Audio-UseTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Audio_Use.app/Audio_Use";
+			};
+			name = Release;
+		};
 		4FD1E1A4248A4D1C00EB1665 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -372,6 +494,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F90A05C24935C4600054CE5 /* Build configuration list for PBXNativeTarget "Audio_UseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F90A05D24935C4600054CE5 /* Debug */,
+				4F90A05E24935C4600054CE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4FD1E188248A4D1800EB1665 /* Build configuration list for PBXProject "Audio_Use" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -35,6 +35,8 @@
 
 - (instancetype)initWithFileType:(AudioFileTypeID)fileType fileSize:(UInt64)fileSize error:(NSError *__autoreleasing *)error;
 - (BOOL)parseData:(NSData *)data error:(NSError *__autoreleasing *)error;
+- (NSData *)fetchMagicCookie;
+- (SInt64)seekToTime:(NSTimeInterval *)ioSeekTime;
 - (void)close;
 
 @end
