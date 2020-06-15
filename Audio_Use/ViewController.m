@@ -33,13 +33,7 @@
     [self test_QSAudioFile];
 }
 
-- (IBAction)fire2:(UIButton *)sender {
-    
-}
 
-- (IBAction)fire3:(UIButton *)sender {
-    
-}
 
 #pragma mark - QSAudioFile
 

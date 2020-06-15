@@ -16,6 +16,7 @@
     
     NSFileHandle *_fileHandler;
     UInt64 _fileSize;
+    UInt64 _offset;
 }
 
 @end
@@ -60,14 +61,21 @@
 - (void)go {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
     _fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:path error:NULL] fileSize];
-    _fileHandler = [NSFileHandle fileHandleForReadingAtPath:path];
     
     NSError *error;
     _audioFileStream = [[QSAudioFileStream alloc] initWithFileType:kAudioFileMP3Type fileSize:_fileSize error:&error];
-    if (error) return;
+    if (error) {
+        return;
+    }
     _audioFileStream.delegate = self;
     
+    _fileHandler = [NSFileHandle fileHandleForReadingAtPath:path];
     NSData *data = [_fileHandler readDataOfLength:1000];
+    _offset += data.length;
+    if (_offset >= _fileSize) {
+        
+    }
+    
     [_audioFileStream parseData:data error:&error];
     if (error) return;
 }

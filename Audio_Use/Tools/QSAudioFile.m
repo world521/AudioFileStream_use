@@ -143,7 +143,7 @@ static SInt64 QSAudioFileGetSize_Callback (void *inClientData) {
         }
     }
     if (!foundFormat) {
-        NSLog(@"找不到对应的系统支持的解码器kAudioFormatProperty_DecodeFormatIDs用于播放");
+        NSLog(@"系统不支持kAudioFormatProperty_DecodeFormatIDs解码格式");
         free(supportedFormats);
         free(formatList);
         [self _closeAudioFile];

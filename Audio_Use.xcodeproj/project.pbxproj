@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4F1815CF24971BD200E5181D /* QSAudioParsedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1815CE24971BD200E5181D /* QSAudioParsedData.m */; };
+		4F1815D22497687600E5181D /* QSAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1815D12497687600E5181D /* QSAudioPlayer.m */; };
+		4F1815D524976BF900E5181D /* ViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1815D424976BF900E5181D /* ViewController2.m */; };
+		4F1815D8249779AB00E5181D /* QSAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1815D7249779AB00E5181D /* QSAudioBuffer.m */; };
 		4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */; };
 		4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */; };
 		4F90A0492493217200054CE5 /* 小城大事.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F90A0472493217200054CE5 /* 小城大事.mp3 */; };
@@ -40,6 +43,12 @@
 /* Begin PBXFileReference section */
 		4F1815CD24971BD200E5181D /* QSAudioParsedData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioParsedData.h; sourceTree = "<group>"; };
 		4F1815CE24971BD200E5181D /* QSAudioParsedData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioParsedData.m; sourceTree = "<group>"; };
+		4F1815D02497687600E5181D /* QSAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioPlayer.h; sourceTree = "<group>"; };
+		4F1815D12497687600E5181D /* QSAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioPlayer.m; sourceTree = "<group>"; };
+		4F1815D324976BF900E5181D /* ViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController2.h; sourceTree = "<group>"; };
+		4F1815D424976BF900E5181D /* ViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController2.m; sourceTree = "<group>"; };
+		4F1815D6249779AB00E5181D /* QSAudioBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioBuffer.h; sourceTree = "<group>"; };
+		4F1815D7249779AB00E5181D /* QSAudioBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioBuffer.m; sourceTree = "<group>"; };
 		4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio_Play.h; sourceTree = "<group>"; };
 		4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio_Play.m; sourceTree = "<group>"; };
 		4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioFileStream.h; sourceTree = "<group>"; };
@@ -95,12 +104,16 @@
 			children = (
 				4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */,
 				4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */,
+				4F1815D02497687600E5181D /* QSAudioPlayer.h */,
+				4F1815D12497687600E5181D /* QSAudioPlayer.m */,
 				4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */,
 				4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */,
 				4F90A05F24936C9B00054CE5 /* QSAudioFile.h */,
 				4F90A06024936C9B00054CE5 /* QSAudioFile.m */,
 				4F1815CD24971BD200E5181D /* QSAudioParsedData.h */,
 				4F1815CE24971BD200E5181D /* QSAudioParsedData.m */,
+				4F1815D6249779AB00E5181D /* QSAudioBuffer.h */,
+				4F1815D7249779AB00E5181D /* QSAudioBuffer.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -141,6 +154,8 @@
 				4FD1E194248A4D1800EB1665 /* SceneDelegate.m */,
 				4FD1E196248A4D1800EB1665 /* ViewController.h */,
 				4FD1E197248A4D1800EB1665 /* ViewController.m */,
+				4F1815D324976BF900E5181D /* ViewController2.h */,
+				4F1815D424976BF900E5181D /* ViewController2.m */,
 				4F6B3F4D2491D06100E9B834 /* Tools */,
 				4FD1E1A9248A4DF900EB1665 /* AudioFileStream_Use.h */,
 				4FD1E1AA248A4DF900EB1665 /* AudioFileStream_Use.m */,
@@ -272,6 +287,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FCFE771248F2FDF00331A03 /* AudioFile_Use.m in Sources */,
+				4F1815D524976BF900E5181D /* ViewController2.m in Sources */,
+				4F1815D22497687600E5181D /* QSAudioPlayer.m in Sources */,
 				4FD1E198248A4D1800EB1665 /* ViewController.m in Sources */,
 				4F90A06124936C9B00054CE5 /* QSAudioFile.m in Sources */,
 				4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */,
@@ -279,6 +296,7 @@
 				4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */,
 				4F1815CF24971BD200E5181D /* QSAudioParsedData.m in Sources */,
 				4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */,
+				4F1815D8249779AB00E5181D /* QSAudioBuffer.m in Sources */,
 				4FD1E1A3248A4D1C00EB1665 /* main.m in Sources */,
 				4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */,
 				4FD1E195248A4D1800EB1665 /* SceneDelegate.m in Sources */,
