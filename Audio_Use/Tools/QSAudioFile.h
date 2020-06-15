@@ -8,17 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-
-NS_ASSUME_NONNULL_BEGIN
+@class QSAudioParsedData;
 
 @interface QSAudioFile : NSObject
 
 @property (nonatomic, copy, readonly) NSString *filePath;
 @property (nonatomic, assign, readonly) AudioFileTypeID fileType;
 @property (nonatomic, assign, readonly) unsigned long long fileSize;
+@property (nonatomic, assign, readonly) AudioStreamBasicDescription format;
+@property (nonatomic, assign, readonly) UInt32 bitRate;
+@property (nonatomic, assign, readonly) UInt64 audioDataByteCount;
+@property (nonatomic, assign, readonly) NSTimeInterval duration;
+@property (nonatomic, assign, readonly) UInt32 maxPacketSize;
 
 - (instancetype)initWithFilePath:(NSString *)filePath fileType:(AudioFileTypeID)fileType;
+- (NSArray <QSAudioParsedData *>*)parseData:(BOOL *)isEOF;
+- (NSData *)fetchMagicCookie;
+- (void)close;
 
 @end
-
-NS_ASSUME_NONNULL_END

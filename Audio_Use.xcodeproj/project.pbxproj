@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F1815CF24971BD200E5181D /* QSAudioParsedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1815CE24971BD200E5181D /* QSAudioParsedData.m */; };
 		4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */; };
 		4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */; };
 		4F90A0492493217200054CE5 /* 小城大事.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4F90A0472493217200054CE5 /* 小城大事.mp3 */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F1815CD24971BD200E5181D /* QSAudioParsedData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioParsedData.h; sourceTree = "<group>"; };
+		4F1815CE24971BD200E5181D /* QSAudioParsedData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QSAudioParsedData.m; sourceTree = "<group>"; };
 		4F6B3F4A2491B9F900E9B834 /* Audio_Play.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio_Play.h; sourceTree = "<group>"; };
 		4F6B3F4B2491B9F900E9B834 /* Audio_Play.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio_Play.m; sourceTree = "<group>"; };
 		4F6B3F4E2491D0DB00E9B834 /* QSAudioFileStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QSAudioFileStream.h; sourceTree = "<group>"; };
@@ -96,6 +99,8 @@
 				4F6B3F4F2491D0DB00E9B834 /* QSAudioFileStream.m */,
 				4F90A05F24936C9B00054CE5 /* QSAudioFile.h */,
 				4F90A06024936C9B00054CE5 /* QSAudioFile.m */,
+				4F1815CD24971BD200E5181D /* QSAudioParsedData.h */,
+				4F1815CE24971BD200E5181D /* QSAudioParsedData.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 				4F6B3F502491D0DB00E9B834 /* QSAudioFileStream.m in Sources */,
 				4FD1E1AB248A4DF900EB1665 /* AudioFileStream_Use.m in Sources */,
 				4FCFE774248F83A700331A03 /* AudioQueue_Use.m in Sources */,
+				4F1815CF24971BD200E5181D /* QSAudioParsedData.m in Sources */,
 				4FD1E192248A4D1800EB1665 /* AppDelegate.m in Sources */,
 				4FD1E1A3248A4D1C00EB1665 /* main.m in Sources */,
 				4F6B3F4C2491B9F900E9B834 /* Audio_Play.m in Sources */,

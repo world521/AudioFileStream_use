@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 @class QSAudioFileStream;
-@class QSAudioFileStreamParsedData;
+@class QSAudioParsedData;
 
 @protocol QSAudioFileStreamDelegate <NSObject>
 @required
-- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray <QSAudioFileStreamParsedData *> *)audioData;
+- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray <QSAudioParsedData *> *)audioData;
 @optional
 - (void)audioFileStreamReadyToProducePackets:(QSAudioFileStream *)audioFileStream;
 @end
@@ -39,11 +39,5 @@
 - (SInt64)seekToTime:(NSTimeInterval *)ioSeekTime;
 - (void)close;
 
-@end
-
-@interface QSAudioFileStreamParsedData : NSObject
-@property (nonatomic, strong, readonly) NSData *data;
-@property (nonatomic, assign, readonly) AudioStreamPacketDescription packetDescription;
-+ (instancetype)parseDataWithBytes:(const void *)bytes packectDescription:(AudioStreamPacketDescription)packetDescription;
 @end
 

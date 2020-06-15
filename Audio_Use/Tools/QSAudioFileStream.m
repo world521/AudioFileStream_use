@@ -7,10 +7,10 @@
 //
 
 #import "QSAudioFileStream.h"
+#import "QSAudioParsedData.h"
 
 #define MaxPacketsThatUpdateBitRate 5000
 #define MinPacketsThatUpdateBitRate 10
-
 
 @interface QSAudioFileStream() {
     BOOL _discontinuous;
@@ -25,26 +25,6 @@
 }
 - (void)handleAudioFileStreamProperty:(AudioFilePropertyID)propertyID;
 - (void)handleAudioFileStreamPackets:(const void *)packets numberOfBytes:(UInt32)numberOfBytes numberOfPackets:(UInt32)numberOfPackets packetDescriptions:(AudioStreamPacketDescription *)packetDescriptions;
-@end
-
-@implementation QSAudioFileStreamParsedData
-
-+ (instancetype)parseDataWithBytes:(const void *)bytes packectDescription:(AudioStreamPacketDescription)packetDescription {
-    return [[self alloc] initWithBytes:bytes packectDescription:packetDescription];
-}
-
-- (instancetype)initWithBytes:(const void *)bytes packectDescription:(AudioStreamPacketDescription)packetDescription {
-    if (bytes == NULL || packetDescription.mDataByteSize == 0) {
-        return nil;
-    }
-    
-    if (self = [super init]) {
-        _data = [NSData dataWithBytes:bytes length:packetDescription.mDataByteSize];
-        _packetDescription = packetDescription;
-    }
-    return self;
-}
-
 @end
 
 @implementation QSAudioFileStream
@@ -255,7 +235,7 @@ static void QSAudioFileStreamPackets_Callback(void *inClientData, UInt32 inNumbe
     NSMutableArray *parsedDataArray = [NSMutableArray array];
     for (int i = 0; i < numberOfPackets; i++) {
         SInt64 packetOffset = packetDescriptions[i].mStartOffset;
-        QSAudioFileStreamParsedData *parsedData = [QSAudioFileStreamParsedData parseDataWithBytes:packets + packetOffset packectDescription:packetDescriptions[i]];
+        QSAudioParsedData *parsedData = [QSAudioParsedData parseDataWithBytes:packets + packetOffset packectDescription:packetDescriptions[i]];
         [parsedDataArray addObject:parsedData];
         
         _processedPacketsSize += parsedData.packetDescription.mDataByteSize;

@@ -90,7 +90,7 @@
     
 }
 
-- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray<QSAudioFileStreamParsedData *> *)audioData {
+- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray<QSAudioParsedData *> *)audioData {
     
 }
 

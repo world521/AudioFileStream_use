@@ -9,11 +9,12 @@
 #import "ViewController.h"
 #import "QSAudioFileStream.h"
 #import "QSAudioFile.h"
+#import "QSAudioParsedData.h"
 
 @interface ViewController () <QSAudioFileStreamDelegate>
 {
-//    NSFileHandle *_file;
-//    QSAudioFileStream *_audioFileStream;
+    NSFileHandle *_file;
+    QSAudioFileStream *_audioFileStream;
     
     QSAudioFile *_audioFile;
 }
@@ -24,10 +25,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
 }
 
 - (IBAction)fire:(UIButton *)sender {
-    /*
+    [self test_QSAudioFile];
+}
+
+- (IBAction)fire2:(UIButton *)sender {
+    
+}
+
+- (IBAction)fire3:(UIButton *)sender {
+    
+}
+
+#pragma mark - QSAudioFile
+
+- (void)test_QSAudioFile {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
+    _audioFile = [[QSAudioFile alloc] initWithFilePath:path fileType:kAudioFileMP3Type];
+    BOOL isEOF = NO;
+    while(!isEOF) {
+        NSArray <QSAudioParsedData *>*parsedData = [_audioFile parseData:&isEOF];
+        NSLog(@"解析出来的数据packet大小: %ld", parsedData.count);
+    }
+}
+
+#pragma mark - QSAudioFileStream
+
+- (void)test_QSAudioFileStream {
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"她来听我的演唱会" ofType:@"mp3"];
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"小城大事" ofType:@"mp3"];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
@@ -60,25 +88,13 @@
     _audioFileStream = nil;
     [_file closeFile];
     _file = nil;
-     */
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
-    _audioFile = [[QSAudioFile alloc] init];
-}
-
-- (IBAction)fire2:(UIButton *)sender {
-    
-}
-
-- (IBAction)fire3:(UIButton *)sender {
-    
 }
 
 - (void)audioFileStreamReadyToProducePackets:(QSAudioFileStream *)audioFileStream {
     NSLog(@"开始解析Packet了");
 }
 
-- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray<QSAudioFileStreamParsedData *> *)audioData {
+- (void)audioFileStream:(QSAudioFileStream *)audioFileStream audioDataParsed:(NSArray<QSAudioParsedData *> *)audioData {
     NSLog(@"解析出Packet了 个数:%ld", audioData.count);
 }
 
