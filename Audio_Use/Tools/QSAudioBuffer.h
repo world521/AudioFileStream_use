@@ -17,6 +17,7 @@
 - (void)enqueueData:(QSAudioParsedData *)data;
 - (void)enqueueFromDataArray:(NSArray <QSAudioParsedData *>*)dataArray;
 
+/// 需要手动释放free(*descriptions)
 - (NSData *)dequeueDataWithSize:(UInt32)requestSize packetCount:(UInt32 *)packetCount descriptions:(AudioStreamPacketDescription **)descriptions;
 
 - (BOOL)hasData;
