@@ -227,6 +227,7 @@ static SInt64 QSAudioFileGetSize_Callback (void *inClientData) {
     }
     
     free(outBuffer);
+    free(outPacketDescriptions);
     
     return parsedDataArray;
 }

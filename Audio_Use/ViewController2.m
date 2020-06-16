@@ -22,7 +22,7 @@
     [super viewDidLoad];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
-    _player = [QSAudioPlayer alloc] init
+    
 }
 
 - (IBAction)pauseClicked:(UIButton *)sender {

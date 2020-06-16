@@ -7,11 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
+#import <CoreAudio/CoreAudioTypes.h>
+@class QSAudioParsedData;
 
 @interface QSAudioBuffer : NSObject
-+ (instancetype)buffer;
-@end
 
-NS_ASSUME_NONNULL_END
++ (instancetype)buffer;
+
+- (void)enqueueData:(QSAudioParsedData *)data;
+- (void)enqueueFromDataArray:(NSArray <QSAudioParsedData *>*)dataArray;
+
+- (NSData *)dequeueDataWithSize:(UInt32)requestSize packetCount:(UInt32 *)packetCount descriptions:(AudioStreamPacketDescription **)descriptions;
+
+- (BOOL)hasData;
+- (UInt32)bufferedSize;
+- (void)clean;
+
+@end

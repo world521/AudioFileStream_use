@@ -23,6 +23,7 @@
 
 - (instancetype)initWithFilePath:(NSString *)filePath fileType:(AudioFileTypeID)fileType;
 - (NSArray <QSAudioParsedData *>*)parseData:(BOOL *)isEOF;
+- (void)seekToTime:(NSTimeInterval)seekTime;
 - (NSData *)fetchMagicCookie;
 - (void)close;
 

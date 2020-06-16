@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, QSAudioPlayerStatus) {
 @property (nonatomic, assign, readonly) BOOL failed;
 
 - (instancetype)initWithFilePath:(NSString *)filePath fileType:(AudioFileTypeID)fileType;
+- (void)play;
 
 @end
 
