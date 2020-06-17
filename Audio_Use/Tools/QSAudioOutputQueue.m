@@ -7,6 +7,7 @@
 //
 
 #import "QSAudioOutputQueue.h"
+#import <pthread.h>
 
 static const int QSAudioQueueBufferCount = 2;
 
@@ -24,6 +25,8 @@ static const int QSAudioQueueBufferCount = 2;
     
     pthread_mutex_t _mutex;
     pthread_cond_t _cond;
+    
+    BOOL _started;
 }
 @end
 
@@ -49,7 +52,7 @@ static void QSAudioQueueProperty_Callback(void * __nullable inUserData, AudioQue
         _buffers = [NSMutableArray array];
         _reusableBuffers = [NSMutableArray array];
         [self _createAudioOutputQueue:magicCookie];
-        [self mutexInit];
+        [self _mutexInit];
     }
     return self;
 }
@@ -98,19 +101,51 @@ static void QSAudioQueueProperty_Callback(void * __nullable inUserData, AudioQue
     [self setParameter:kAudioQueueParam_Volume value:_volume error:NULL];
 }
 
-- (BOOL)setProperty:(AudioQueuePropertyID)propertyID dataSize:(UInt32)dataSize data:(const void *)data error:(NSError * __autoreleasing *)error {
-    OSStatus status = AudioQueueSetProperty(_audioQueue, propertyID, data, dataSize);
-    [self _errorForStatus:status error:error];
-    return status == noErr;
+- (BOOL)playData:(NSData *)data packetCount:(UInt32)packetCount packetDescriptions:(AudioStreamPacketDescription *)packetDescriptions isEof:(BOOL)isEof {
+    if (data.length > _bufferSize) {
+        return NO;
+    }
+    
+    if (_reusableBuffers.count == 0) {
+        if (!_started && ![self _start]) {
+            return NO;
+        }
+        [self _mutexWait];
+    }
+    
+    QSAudioQueueBuffer *bufferObj = [_reusableBuffers firstObject];
+    [_reusableBuffers removeObject:bufferObj];
+    
+    if (!bufferObj) {
+        AudioQueueBufferRef buffer;
+        OSStatus status = AudioQueueAllocateBuffer(_audioQueue, _bufferSize, &buffer);
+        if (status != noErr) {
+            NSLog(@"创建AudioQueueBufferRef失败");
+            return NO;
+        }
+        bufferObj = [[QSAudioQueueBuffer alloc] init];
+        bufferObj.buffer = buffer;
+    }
+    
+    memcpy(bufferObj.buffer->mAudioData, data.bytes, data.length);
+    bufferObj.buffer->mAudioDataByteSize = (UInt32)data.length;
+    
+    OSStatus status = AudioQueueEnqueueBuffer(_audioQueue, bufferObj.buffer, packetCount, packetDescriptions);
+    if (status != noErr) {
+        NSLog(@"AudioQueueEnqueueBuffer失败");
+        return NO;
+    }
+    
+    if (_reusableBuffers.count == 0 || isEof) {
+        if (!_started && ![self _start]) {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
-- (BOOL)setParameter:(AudioQueueParameterID)parameterID value:(AudioQueueParameterValue)value error:(NSError * __autoreleasing *)error {
-    OSStatus status = AudioQueueSetParameter(_audioQueue, parameterID, value);
-    [self _errorForStatus:status error:error];
-    return status == noErr;
-}
-
-
+/// 某块Buffer被使用之后
 - (void)handleAudioQueueOutput:(AudioQueueRef)audioQueue buffer:(AudioQueueBufferRef)buffer {
     for (QSAudioQueueBuffer *ocBuffer in _buffers) {
         if (ocBuffer.buffer == buffer) {
@@ -118,12 +153,101 @@ static void QSAudioQueueProperty_Callback(void * __nullable inUserData, AudioQue
             break;
         }
     }
-    
-    
+    [self _mutexSignal];
 }
 
+/// AudioQueue属性变化
 - (void)handleAudioQueueProperty:(AudioQueueRef)audioQueue property:(AudioQueuePropertyID)property {
+    if (property == kAudioQueueProperty_IsRunning) {
+        UInt32 isRunning = 0;
+        UInt32 size = sizeof(isRunning);
+        AudioQueueGetProperty(audioQueue, property, &isRunning, &size);
+        _isRunning = isRunning;
+    }
+}
+
+- (BOOL)_start {
+    OSStatus status = AudioQueueStart(_audioQueue, NULL);
+    _started = status == noErr;
+    return _started;
+}
+
+- (BOOL)pause {
+    OSStatus status = AudioQueuePause(_audioQueue);
+    _started = NO;
+    return status == noErr;
+}
+
+- (BOOL)resume {
+    return [self _start];
+}
+
+- (BOOL)reset {
+    OSStatus status = AudioQueueReset(_audioQueue);
+    return status == noErr;
+}
+
+- (BOOL)stop:(BOOL)immediately {
+    OSStatus status;
+    if (immediately) {
+        status = AudioQueueStop(_audioQueue, true);
+    } else {
+        status = AudioQueueStop(_audioQueue, false);
+    }
+    _started = NO;
+    return status == noErr;
+}
+
+- (BOOL)flush {
+    OSStatus status = AudioQueueFlush(_audioQueue);
+    return status == noErr;
+}
+
+- (BOOL)available {
+    return _audioQueue != NULL;
+}
+
+- (NSTimeInterval)playedTime {
+    if (_format.mSampleRate) {
+        return 0;
+    }
     
+    AudioTimeStamp time;
+    OSStatus status = AudioQueueGetCurrentTime(_audioQueue, NULL, &time, NULL);
+    if (status == noErr) {
+        return time.mSampleTime / _format.mSampleRate;
+    }
+    
+    return 0;
+}
+
+- (void)setVolume:(float)volume {
+    _volume = volume;
+    [self setParameter:kAudioQueueParam_Volume value:_volume error:NULL];
+}
+
+- (BOOL)getProperty:(AudioQueuePropertyID)propertyID dataSize:(UInt32 *)dataSize data:(void *)data error:(NSError *__autoreleasing *)outError {
+    OSStatus status = AudioQueueGetProperty(_audioQueue, propertyID, data, dataSize);
+    [self _errorForStatus:status error:outError];
+    return status == noErr;
+}
+
+- (BOOL)setProperty:(AudioQueuePropertyID)propertyID dataSize:(UInt32)dataSize data:(const void *)data error:(NSError * __autoreleasing *)outError {
+    OSStatus status = AudioQueueSetProperty(_audioQueue, propertyID, data, dataSize);
+    [self _errorForStatus:status error:outError];
+    return status == noErr;
+}
+
+- (BOOL)getParameter:(AudioQueueParameterID)parameterID value:(AudioQueueParameterValue *)value error:(NSError *__autoreleasing *)outError {
+    OSStatus status = AudioQueueGetParameter(_audioQueue, parameterID, value);
+    [self _errorForStatus:status error:outError];
+    return status == noErr;
+}
+
+- (BOOL)setParameter:(AudioQueueParameterID)parameterID value:(AudioQueueParameterValue)value error:(NSError * __autoreleasing *)outError {
+    OSStatus status = AudioQueueSetParameter(_audioQueue, parameterID, value);
+    [self _errorForStatus:status error:outError];
+    return status == noErr;
 }
 
 - (void)_errorForStatus:(OSStatus)status error:(NSError * __autoreleasing *)outError {
@@ -134,12 +258,21 @@ static void QSAudioQueueProperty_Callback(void * __nullable inUserData, AudioQue
 
 #pragma mark - mutex
 
-- (void)mutexInit {
-    
+- (void)_mutexInit {
+    pthread_mutex_init(&_mutex, NULL);
+    pthread_cond_init(&_cond, NULL);
 }
 
-- (void)mutexWait {
-    
+- (void)_mutexWait {
+    pthread_mutex_lock(&_mutex);
+    pthread_cond_wait(&_cond, &_mutex);
+    pthread_mutex_unlock(&_mutex);
+}
+
+- (void)_mutexSignal {
+    pthread_mutex_lock(&_mutex);
+    pthread_cond_signal(&_cond);
+    pthread_mutex_unlock(&_mutex);
 }
 
 @end

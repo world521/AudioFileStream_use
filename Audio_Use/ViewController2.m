@@ -22,7 +22,8 @@
     [super viewDidLoad];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"MP3Sample" ofType:@"mp3"];
-    
+//    [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:NO];
+//    [UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeRight
 }
 
 - (IBAction)pauseClicked:(UIButton *)sender {
